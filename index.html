@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mini PWA Test Images</title>
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#2196f3">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h1>👋 PWA avec images offline</h1>
+  <p>Exemple avec toutes les images A et B en cache</p>
+  <button onclick="showMessage()">Vérifier</button>
+  <p id="msg"></p>
+
+  <script src="script.js"></script>
+  <script>
+    if ("serviceWorker" in navigator) {
+      navigator.serviceWorker.register("/sw.js")
+        .then(() => console.log("Service Worker installé ✅"))
+        .catch(err => console.error("Erreur SW:", err));
+    }
+  </script>
+</body>
+</html>
