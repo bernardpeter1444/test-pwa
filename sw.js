@@ -7,6 +7,15 @@ const urlsToCache = [
   '/icon.png',
   '/icon.png'
 ];
+// Images A (1 → 78)
+for (let i = 1; i <= 78; i++) {
+  FILES_TO_CACHE.push(`/assets/image${i}A.jpg`);
+}
+
+// Images B (1 → 36)
+for (let i = 1; i <= 36; i++) {
+  FILES_TO_CACHE.push(`/assets/image${i}B.jpg`);
+}
 
 self.addEventListener('install', event => {
   event.waitUntil(
