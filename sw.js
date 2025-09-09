@@ -8,6 +8,7 @@ const urlsToCache = [
   "/Accueil.png",
   "/icon-192.png",
   "/icon-512.png",
+  "/Accueil.png",
   // Series A (1..78)
   "/Image1A.jpg","/Image2A.jpg","/Image3A.jpg","/Image4A.jpg","/Image5A.jpg",
   "/Image6A.jpg","/Image7A.jpg","/Image8A.jpg","/Image9A.jpg","/Image10A.jpg",
