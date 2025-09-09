@@ -1,25 +1,487 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Test PWA</title>
-  <link rel="manifest" href="manifest.json">
-  <link rel="icon" href="icon-192.png">
-  <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Dien Chan</title>
+<link rel="manifest" href="manifest.json">
+<style>
+  :root{
+    --jade:#2e7d6d;      /* vert jade */
+    --jade-dark:#256257;
+    --beige:#f9f6ef;     /* beige zen */
+    --rouge:#b43c38;     /* rouge asiatique doux */
+    --sable:#c49a6c;     /* sable doré */
+    --encre:#333;
+  }
+  *{box-sizing:border-box}
+  html,body{height:100%}
+  body{
+    margin:0; color:var(--encre);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
+    background:
+      radial-gradient(1200px 600px at 130% -10%, rgba(180,60,56,.10), transparent 60%),
+      radial-gradient(1000px 500px at -10% 120%, rgba(46,125,109,.10), transparent 60%),
+      repeating-linear-gradient(135deg, rgba(196,154,108,.09), rgba(196,154,108,.09) 10px, transparent 10px, transparent 20px),
+      var(--beige);
+    text-align:center;
+  }
+  /* petites "branches" décoratives */
+  .corner::before,.corner::after{
+    content:""; position:absolute; width:90px; height:90px; border-radius:12px;
+    border:2px solid rgba(46,125,109,.25);
+  }
+  .corner::before{top:12px; left:12px; border-right:none; border-bottom:none}
+  .corner::after{bottom:12px; right:12px; border-left:none; border-top:none}
+
+  h2{color:var(--rouge); margin:10px 0 6px}
+  p.muted{color:#666; margin:4px 0 14px}
+
+  .screen{display:none; padding:16px; position:relative}
+  .active{display:block}
+
+  .card{
+    max-width:1000px; margin:10px auto 0; padding:14px 12px; background:rgba(255,255,255,.65);
+    backdrop-filter:blur(3px); border:1px solid rgba(0,0,0,.05);
+    border-radius:16px; box-shadow:0 6px 18px rgba(0,0,0,.08);
+    position:relative; overflow:hidden;
+  }
+
+  .btn{
+    display:inline-block; padding:12px 18px; margin:8px 6px;
+    border:none; border-radius:12px; font-size:18px; color:#fff;
+    background:var(--jade); box-shadow:0 2px 6px rgba(0,0,0,.12); cursor:pointer;
+    transition:transform .05s ease, background .2s ease;
+  }
+  .btn:active{transform:scale(.98)}
+  .btn:hover{background:var(--jade-dark)}
+  .btn-menu{background:var(--rouge)}
+  .btn-list{background:var(--sable)}
+  .btn-ghost{
+    background:transparent; color:var(--rouge); border:2px solid var(--rouge);
+  }
+
+  /* menu bouton "Fermer" */
+  .close-row{margin-top:6px}
+  .close-hint{font-size:12px; color:#666; margin-top:2px}
+
+  #search{
+    width:92%; max-width:720px; padding:10px 12px; margin:12px auto;
+    border:1px solid #d9d9d9; border-radius:10px; font-size:16px; background:#fff;
+  }
+  ul{list-style:none; padding:0; margin:10px auto; max-width:1000px}
+  li{
+    text-align:left; background:#fff; margin:8px 12px; padding:12px 14px;
+    border-radius:12px; box-shadow:0 2px 8px rgba(0,0,0,.08); cursor:pointer;
+  }
+  li:hover{background:#f3d6e4}
+
+  /* Viewer */
+  #viewer{padding:10px}
+  #pz-wrap{
+    width:100%; height:78vh; max-height:86vh; margin:6px auto 10px;
+    background:#fff; border-radius:16px; box-shadow:0 4px 14px rgba(0,0,0,.15);
+    overflow:hidden; touch-action:none; position:relative;
+  }
+  #pz{position:absolute; left:0; top:0; transform-origin:0 0; will-change:transform;}
+  #bigImage{display:block; max-width:none; max-height:none; user-select:none; -webkit-user-drag:none; pointer-events:none;}
+
+  /* ===== Styles de l'écran À PROPOS (scopés) ===== */
+  #aboutScreen h1{
+    color:#2c3e50; text-align:center; margin:10px 0 20px;
+  }
+  #aboutScreen h2{ color:#16a085; margin-top:16px; }
+  #aboutScreen h3{
+    color:#fff; cursor:pointer; margin:0; padding:10px; border-radius:8px;
+  }
+  #aboutScreen .section{
+    background-color:#fff; border-radius:12px; box-shadow:0 6px 15px rgba(0,0,0,0.1);
+    padding:20px; margin:20px 0; text-align:left;
+  }
+  #aboutScreen .box{ border-radius:8px; margin:15px 0; overflow:hidden; }
+  #aboutScreen .content{ padding:15px; background-color:#f0f0f0; display:none; }
+  #aboutScreen .pression{ background-color:#e74c3c; }
+  #aboutScreen .massage{ background-color:#3498db; }
+  #aboutScreen .friction{ background-color:#f39c12; }
+  #aboutScreen .avertissement{ background-color:#c0392b; color:#fff; padding:15px; border-radius:8px; }
+  #aboutScreen ul{ margin-left:20px; }
+  #aboutScreen li.check::before{ content:"✅ "; }
+  #aboutScreen li.warning::before{ content:"⚠️ "; }
+
+  /* Responsif */
+  @media (max-width:480px){
+.btn{font-size:16px; padding:11px 16px}
+    li{margin:8px 8px}
+  }
+</style>
 </head>
 <body>
-  <h1>Bienvenue dans ma PWA !</h1>
-  <p>Ceci est un exemple de Progressive Web App.</p>
 
-  <script src="script.js"></script>
-  <script>
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('/sw.js')
-        .then(() => console.log('Service Worker enregistré'))
-        .catch(err => console.error('Erreur SW :', err));
+  <!-- MENU -->
+  <div id="home" class="screen active">
+ <img src="Accueil.png" alt="Accueil" 
+    <div class="card corner">
+      <div style="height:14px"></div>
+
+      <h2>Bienvenue dans le Dien Chan</h2>
+     
+      <div>
+        <button class="btn" onclick="showList('A')">Traitements</button>
+        <button class="btn" onclick="showList('B')">Symptômes</button>
+        <button class="btn btn-list" onclick="showAbout()">À propos</button>
+      </div>
+      <div class="close-row">
+        <button class="btn btn-ghost" onclick="fermerApp()">❌ Fermer l’application</button>
+        <div class="close-hint"></div>
+      </div>
+      <div style="height:8px"></div>
+     Bernard PETER @ BlueDevil
+  </div>
+
+  <!-- LISTES -->
+  <div id="listScreen" class="screen">
+    <div class="card corner">
+      <button class="btn btn-menu" onclick="goHome()">⬅ Retour au menu</button>
+      <h2 id="listTitle">Liste</h2>
+      <input id="search" type="text" placeholder="Rechercher..." onkeyup="filterList()" />
+      <ul id="list"></ul>
+    </div>
+  </div>
+
+  <!-- VIEWER -->
+  <div id="viewer" class="screen">
+    <div class="card">
+      <div id="pz-wrap">
+        <div id="pz"><img id="bigImage" src="" alt=""></div>
+      </div>
+      <button class="btn btn-list" onclick="backToList()">⬅ Retour à la liste</button>
+    </div>
+  </div>
+
+  <!-- À PROPOS -->
+  <div id="aboutScreen" class="screen">
+    <div class="card corner">
+      <button class="btn btn-menu" onclick="goHome()">⬅ Retour au menu</button>
+      <h1>Dien Chan - Guide interactif</h1>
+
+      <div class="section">
+        <h2>Qu'est-ce que le Dien Chan ?</h2>
+        <p>
+          Le Dien Chan est une technique de réflexologie faciale mise au point par le Professeur Bùi Quốc Châu dans les années 1980 au Vietnam.<br>
+          Il repose sur l’idée que le visage est une carte reflétant l’ensemble du corps. En stimulant des points précis sur le visage avec les doigts ou des outils spécifiques, on favorise l’auto-régulation et soulage divers maux.
+        </p>
+      </div>
+
+      <div class="section">
+        <h2>Comment ça fonctionne ?</h2>
+        <p>Le Dien Chan repose sur des schémas de réflexion du corps sur le visage. Plusieurs superpositions permettent d’agir différemment sur un même problème. En stimulant certains points ou zones :</p>
+        <ul>
+          <li class="check">Activer la circulation sanguine et énergétique</li>
+          <li class="check">Apaiser les douleurs et tensions</li>
+          <li class="check">Stimuler les capacités naturelles d’auto-régulation</li>
+        </ul>
+        <p>C'est une technique non invasive, sans aiguilles ni médicaments.</p>
+      </div>
+
+      <div class="section">
+        <h2>À quoi ça sert ?</h2>
+        <ul>
+          <li class="check">Soulager les douleurs musculaires et articulaires</li>
+          <li class="check">Améliorer la digestion et les troubles intestinaux</li>
+          <li class="check">Réduire le stress et favoriser la détente</li>
+          <li class="check">Améliorer la circulation sanguine</li>
+          <li class="check">Aider à retrouver un meilleur équilibre général</li>
+          <li class="warning">Une approche complémentaire, pas un substitut à la médecine</li>
+        </ul>
+      </div>
+
+      <div class="section">
+        <h2>Techniques de stimulation</h2>
+
+        <div class="box pression">
+          <h3><strong>Pression    </strong> <span style="font-weight:normal; font-size:.85em; color:#eee; font-style:italic;">(Cliquez)</span></h3>
+          <div class="content">
+            <p><strong>Quand :</strong> Douleurs aiguës, tensions musculaires, zones inflammées.<br>
+            <strong>Comment :</strong> Avec le doigt (index ou pouce), exercer une pression modérée.<br>
+            <strong>Durée :</strong> 5 à 10 secondes, répéter si nécessaire.</p>
+          </div>
+        </div>
+
+        <div class="box massage">
+          <h3><strong>Massage    </strong> <span style="font-weight:normal; font-size:.85em; color:#eee; font-style:italic;">(Cliquez)</span></h3>
+          <div class="content">
+            <p><strong>Quand :</strong> Points nécessitant stimulation douce et continue, tensions, stress.<br>
+            <strong>Comment :</strong> Mouvements circulaires ou va-et-vient, pression légère.<br>
+            <strong>Durée :</strong> 1 à 2 minutes selon réaction.</p>
+          </div>
+        </div>
+
+        <div class="box friction">
+          <h3><strong>Friction    </strong> <span style="font-weight:normal; font-size:.85em; color:#eee; font-style:italic;">(Cliquez)</span></h3>
+          <div class="content">
+            <p><strong>Quand :</strong> Points superficiels ou zones sensibles.<br>
+            <strong>Comment :</strong> Mouvements rapides et énergiques, petits cercles ou déplacement de la peau.<br>
+            <strong>Durée :</strong> 30 secondes à 1 minute.</p>
+          </div>
+        </div>
+      </div>
+
+      
+
+  <div class="section box avertissement">
+    <h2>Résumé & Conseils</h2>
+<ul>
+    <li style="color: red;">Pression : douleurs aiguës et activation énergétique.</li>
+  <li style="color: blue;">Massage : détendre, améliorer circulation et tensions générales.</li>
+  <li style="color: black;">Friction : zones sensibles, stimuler circulation et souplesse.</li>
+</ul>
+    <p>
+      En pratiquant régulièrement, vous allez pouvoir affiner
+      votre ressenti et savoir quel type de stimulation est
+      le plus adapté à chaque situation. Si vous n'êtes pas sûr,
+      commencez par la technique la plus douce (comme le massage) 
+      puis ajustez l'intensité selon les réactions du patient.
+    </p>
+  </div>
+</body>
+</html>
+
+
+
+
+       
+      </div>
+    </div>
+  </div>
+
+<script>
+  // ====== PARAMÈTRES GÉNÉRAUX ======
+  const COUNT_A = 78; // Traitements -> Image1A.jpg .. Image78A.jpg
+  const COUNT_B = 36; // Symptômes  -> Image1B.jpg .. Image36B.jpg
+
+  // >>> TITRES PERSONNALISÉS : remplis à la main si tu veux, sinon laisse [] et des titres auto seront générés <<<
+  const traitements = [ "Asthme", "Allergies","Anxiété-Angoisses-Déconcentration","Règles Abondantes","Appendice inflammation ","Articulations douleur ","Ventre mal diarrhée","Bronchite ","Maux de tête ","Maux de tête depuis la nuque ","Reins troubles douleurs ","Reins calculs rénaux ","Sciatique ","Cholestérol ","Conjonctivite ","Hémorroïdes ","Graisses sur l''abdomen(éliminer) ","Appétit ,sommeil(régulation) ","Alopécie (chute de cheveux) ","Agressivité(calmer) ","Vision(améliorer) ","Varices ","Rhinites ","Rides visage(réduire) ","Cerveau (améliorer l''irrigation) ","Anémie ","Otites ","Rétention de liquide et arthrose ","Mictions nocturnes ","Mucosités (liquéfier) ","Anti-inflammatoire et désintoxiquant","Dépression nerveuse ","Anxiété (crises) ","Dos, Lombaires (maux) ","Douleurs aiguës ","Dos (maux) lumbago ","Fertilité de la femme ","Fertilité de l''homme ","Constipation ","Gorge (inflammation) ","Graisses (réduire), perdre du poids ","Grippe avec tremblement ","Grippe avec fièvre ","Hypertension artérielle ","Règles syndrome prémenstruel ","Insomnie ","Impuissance ","Ovaires-testicules (tumeur) ","Ronflements ","Incontinence urinaire ","Neurasthénie, fatigue nerveuse ","Muscles (douleur) ","Mémoire (pertes de) ","Verrues ","Muscles (douleur), inflammation des articulation ","Migraines ","Odontologie ","Poids (perdre de) ","rostate (troubles de la) ","Dyspnée, respiration difficile ","Revitaliser ","Talon (douleur) ","Sacrum (douleur) ","Sinusite ","Tabagisme ","Température (augmenter') ","Thoracique (toux et douleur) ","Transpiration excessive ","Vision (troubles de la) ","Tumeurs et nodules bénins ","Suffocation ","Seins (raffermir) ","Vertiges ","Ménopause, bouffées de chaleur ","Ostéoporose ","Diabète ","Préparation intellectuelle ","Pieds (douleurs) " ];
+  const symptomes   = [ "Acouphène","Aérophagie","Antibiotique","Anticorps augmenter","Anti-inflammatoire","Antipoison","Cardiaque Rythme Réguler","Cauchemars","Constipation","Défenses immunitaires","Diurétique","Hémorragie arrêter","Graisses diminuer","Incontinence","Insomnies","Irrigation cérébrale réguler","Laxatif","Miction diminuer","Mucosités liquéfier","Muscles détendre","Pression artérielle réguler","Qi diminuer","Qi élever","Qi réguler","Réchauffer","Refroidir","Rhume","Sécrétions augmenter","Sécrétions diminuer","Sécrétions Réguler","Système nerveux réguler","Tendons relaxer","Tension artérielle a élever","Tension artérielle diminuer","Toux contrôler","Tumeurs bénignes réduire", ];
+
+  // ====== DOM ======
+  let mode = "A"; // A=Traitements, B=Symptômes
+  const dom = {
+    home: document.getElementById('home'),
+    listScreen: document.getElementById('listScreen'),
+    viewer: document.getElementById('viewer'),
+    about: document.getElementById('aboutScreen'),
+    list: document.getElementById('list'),
+    listTitle: document.getElementById('listTitle'),
+    search: document.getElementById('search'),
+    bigImage: document.getElementById('bigImage'),
+    pzWrap: document.getElementById('pz-wrap'),
+    pz: document.getElementById('pz')
+  };
+
+  // ====== NAV UTILES ======
+  function showScreen(id){
+    // cacher tous
+    dom.home.classList.remove('active');
+    dom.listScreen.classList.remove('active');
+    dom.viewer.classList.remove('active');
+    dom.about.classList.remove('active');
+    // montrer le demandé
+    document.getElementById(id).classList.add('active');
+  }
+
+  function showList(type){
+    mode = type;
+    showScreen('listScreen');
+
+    const data = (mode === 'A')
+      ? (traitements.length ? traitements : Array.from({length: COUNT_A}, (_,i)=>`Traitement ${i+1}`))
+      : (symptomes.length ? symptomes : Array.from({length: COUNT_B}, (_,i)=>`Symptôme ${i+1}`));
+
+    dom.listTitle.textContent = (mode === 'A') ? 'Liste des Traitements' : 'Liste des Symptômes';
+    dom.list.innerHTML = '';
+
+    data.forEach((titre, i) => {
+      const li = document.createElement('li');
+      li.textContent = titre;
+      li.onclick = () => openImage(i+1);
+      dom.list.appendChild(li);
+    });
+
+    dom.search.value = '';
+  }
+
+  function filterList(){
+    const q = dom.search.value.toLowerCase();
+    dom.list.querySelectorAll('li').forEach(li=>{
+      li.style.display = li.textContent.toLowerCase().includes(q) ? '' : 'none';
+    });
+  }
+
+  function goHome(){ showScreen('home'); }
+
+  function backToList(){ showScreen('listScreen'); }
+
+  function showAbout(){
+    showScreen('aboutScreen');
+    initAboutToggles(); // attache les écouteurs si pas faits
+  }
+
+  // ====== AFFICHAGE IMAGE ======
+  function openImage(index){
+    const src = (mode==='A') ? `Image${index}A.jpg` : `Image${index}B.jpg`;
+    dom.bigImage.src = src;
+
+    resetTransform();
+    dom.bigImage.onload = () => fitToScreen();
+
+    showScreen('viewer');
+  }
+
+  // ====== FERMETURE APP (MIT AI2) ======
+  function closeApp(){
+    if (window.AppInventor && window.AppInventor.setWebViewString){
+      window.AppInventor.setWebViewString("closeApp");
+    } else {
+      alert("Ouvre dans MIT App Inventor pour fermer l’application.");
+    }
+  }
+
+  // ====== PINCH-ZOOM / PAN (VANILLA) ======
+  let scale = 1, minScale = 1, maxScale = 5;
+  let tx = 0, ty = 0;             // translation
+  let startX=0, startY=0;         // pour pan
+  let startTx=0, startTy=0;
+  let startDist=0, startScale=1;  // pour pinch
+  let lastTap=0;
+
+  function setTransform(){
+    dom.pz.style.transform = `translate(${tx}px, ${ty}px) scale(${scale})`;
+  }
+  function resetTransform(){ scale = 1; tx = 0; ty = 0; setTransform(); }
+  function clamp(v, a, b){ return Math.max(a, Math.min(b, v)); }
+
+  function toLocal(x, y){
+    const rect = dom.pzWrap.getBoundingClientRect();
+    const lx = (x - rect.left - tx) / scale;
+    const ly = (y - rect.top  - ty) / scale;
+    return {x:lx, y:ly};
+  }
+
+  function fitToScreen(){
+    const wrapRect = dom.pzWrap.getBoundingClientRect();
+    const imgW = dom.bigImage.naturalWidth || dom.bigImage.width;
+    const imgH = dom.bigImage.naturalHeight || dom.bigImage.height;
+    if(!imgW || !imgH){ resetTransform(); return; }
+
+    const sx = wrapRect.width  / imgW;
+    const sy = wrapRect.height / imgH;
+    scale = Math.min(sx, sy, 1);
+    minScale = scale;
+    tx = (wrapRect.width  - imgW*scale)/2;
+    ty = (wrapRect.height - imgH*scale)/2;
+    setTransform();
+  }
+
+  // Molette (desktop)
+  dom.pzWrap.addEventListener('wheel', (e)=>{
+    e.preventDefault();
+    const factor = Math.exp(-e.deltaY * 0.0015);
+    const newScale = clamp(scale * factor, minScale, maxScale);
+
+    const rect = dom.pzWrap.getBoundingClientRect();
+    const mx = e.clientX, my = e.clientY;
+
+    const before = toLocal(mx, my); // eslint
+    scale = newScale;
+    const after = toLocal(mx, my);
+
+    tx += (mx - rect.left) - (after.x * scale + tx);
+    ty += (my - rect.top ) - (after.y * scale + ty);
+    setTransform();
+  }, {passive:false});
+
+  // Touch (pan / pinch) + double-tap reset
+  dom.pzWrap.addEventListener('touchstart', (e)=>{
+    if(e.touches.length === 1){
+      startX = e.touches[0].clientX;
+      startY = e.touches[0].clientY;
+      startTx = tx; startTy = ty;
+      startDist = 0; // pas de pinch
+    }else if(e.touches.length === 2){
+      const [t1, t2] = Array.from(e.touches);
+      startDist = Math.hypot(t1.clientX - t2.clientX, t1.clientY - t2.clientY);
+      startScale = scale;
+    }
+  }, {passive:false});
+
+  dom.pzWrap.addEventListener('touchend', (e)=>{
+    const now = Date.now();
+    if(now - lastTap < 300){ resetTransform(); fitToScreen(); }
+    lastTap = now;
+  });
+
+  dom.pzWrap.addEventListener('touchmove', (e)=>{
+    if(e.touches.length === 1 && startDist===0){
+      e.preventDefault();
+      const t = e.touches[0];
+      const dx = t.clientX - startX;
+      const dy = t.clientY - startY;
+      tx = startTx + dx;
+      ty = startTy + dy;
+      setTransform();
+    }else if(e.touches.length === 2){
+      e.preventDefault();
+      const [t1, t2] = Array.from(e.touches);
+      const d = Math.hypot(t1.clientX - t2.clientX, t1.clientY - t2.clientY);
+      let newScale = clamp(startScale * (d / startDist), minScale, maxScale);
+
+      const rect = dom.pzWrap.getBoundingClientRect();
+      const mx = (t1.clientX + t2.clientX)/2;
+      const my = (t1.clientY + t2.clientY)/2;
+
+      const before = toLocal(mx, my);
+      scale = newScale;
+      const after  = toLocal(mx, my);
+
+      tx += (mx - rect.left) - (after.x * scale + tx);
+      ty += (my - rect.top ) - (after.y * scale + ty);
+      setTransform();
+    }
+  }, {passive:false});
+
+  // Réadapter au redimensionnement
+  window.addEventListener('resize', ()=>{
+    if(dom.bigImage.src) fitToScreen();
+  });
+  if(dom.bigImage.complete && dom.bigImage.src) fitToScreen();
+
+  // ====== Init toggles "À propos" (affiche/masque contenus) ======
+  let aboutReady = false;
+  function initAboutToggles(){
+    if(aboutReady) return;
+    const headers = document.querySelectorAll('#aboutScreen .box h3');
+    headers.forEach(h=>{
+      h.addEventListener('click', ()=>{
+        const content = h.nextElementSibling;
+        content.style.display = (content.style.display === 'block') ? 'none' : 'block';
+      });
+    });
+    aboutReady = true;
+  }
+    if ("serviceWorker" in navigator) {
+      navigator.serviceWorker.register("service-worker.js");
+    }
+
+    function fermerApp() {
+      // Redirige vers une page vide
+      document.body.innerHTML = "<h2>L’app est fermée. Vous pouvez maintenant fermer l’onglet.</h2>";
+      document.body.style.textAlign = "center";
+      document.body.style.marginTop = "2em";
+      // Facultatif : changer l’arrière-plan pour faire “comme une fermeture”
+      document.body.style.backgroundColor = "#f0f0f0";
     }
   </script>
+
 </body>
 </html>
 
