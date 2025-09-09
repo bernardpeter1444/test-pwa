@@ -5,9 +5,9 @@ const urlsToCache = [
   "/manifest.json",
   "/style.css",
   "/script.js",
-  "/assets/Accueil.png",
-  "/assets/icon1.png",
-  "/assets/icon.png",
+  "assets/Accueil.png",
+  "assets/icon1.png",
+  "assets/icon.png",
   // Series A (1..78)
   "/Image1A.jpg","/Image2A.jpg","/Image3A.jpg","/Image4A.jpg","/Image5A.jpg",
   "/Image6A.jpg","/Image7A.jpg","/Image8A.jpg","/Image9A.jpg","/Image10A.jpg",
