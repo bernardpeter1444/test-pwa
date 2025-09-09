@@ -1,25 +1,11 @@
 <!DOCTYPE html>
 <html lang="fr">
-<head>
  
+<head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Dien Chan</title>
-  <!-- Manifest PWA -->
-  <link rel="manifest" href="manifest.json">
-
-  <!-- Icônes pour iOS (obligatoires car Safari ne lit pas manifest.json) -->
-  <link rel="apple-touch-icon" href="icon.png">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="default">
-  <meta name="apple-mobile-web-app-title" content="DienChan"> 
 <link rel="manifest" href="manifest.json">
-   <!-- Couleur de la barre d’adresse -->
-  <meta name="theme-color" content="#b43c38">
-
-  <!-- Ton CSS habituel -->
-  <link rel="stylesheet" href="style.css">
-
 <style>
   :root{
     --jade:#2e7d6d;      /* vert jade */
@@ -129,15 +115,16 @@
     li{margin:8px 8px}
   }
 </style>
+   <!-- PWA: manifest + iOS support -->
+  <link rel="manifest" href="manifest.json">
+  <link rel="apple-touch-icon" href="icon-192.png">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="DienChan">
+  <meta name="theme-color" content="#b43c38">
+  <link rel="stylesheet" href="style.css">
+
 </head>
-  <script>
-if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('/sw.js')
-    .then(() => console.log('Service Worker enregistré'))
-    .catch(err => console.error('Erreur SW :', err));
-}
-</script>
- <script src="script.js"></script>
 <body>
 
   <!-- MENU -->
@@ -266,6 +253,7 @@ if ('serviceWorker' in navigator) {
       puis ajustez l'intensité selon les réactions du patient.
     </p>
   </div>
+     <script src="script.js"></script>
 </body>
 </html>
 
@@ -507,4 +495,3 @@ if ('serviceWorker' in navigator) {
 
 </body>
 </html>
-
