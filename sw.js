@@ -1,11 +1,11 @@
-const CACHE_NAME = "dienchan-cache-v1";
+sconst CACHE_NAME = "dienchan-cache-v1";
 const urlsToCache = [
   "/",
   "/Index.html",
   "/manifest.json",
   "/style.css",
   "/script.js",
-  "/Accueil.png",
+  "/assets/Accueil.png",
   "/icon-192.png",
   "/icon-512.png",
   "/Accueil.png",
