@@ -9,8 +9,8 @@ const urlsToCache = [
   "assets/icon1.png",
   "assets/icon.png",
   // Series A (1..78)
-  "/Image1A.jpg","/Image2A.jpg","/Image3A.jpg","/Image4A.jpg","/Image5A.jpg",
-  "/Image6A.jpg","/Image7A.jpg","/Image8A.jpg","/Image9A.jpg","/Image10A.jpg",
+  "assets/Image1A.jpg","assets/Image2A.jpg","assets/Image3A.jpg","assets/Image4A.jpg","assets/Image5A.jpg",
+  "assets/Image6A.jpg","assets/Image7A.jpg","assets/Image8A.jpg","assets/Image9A.jpg","assets/Image10A.jpg",
   "/Image11A.jpg","/Image12A.jpg","/Image13A.jpg","/Image14A.jpg","/Image15A.jpg",
   "/Image16A.jpg","/Image17A.jpg","/Image18A.jpg","/Image19A.jpg","/Image20A.jpg",
   "/Image21A.jpg","/Image22A.jpg","/Image23A.jpg","/Image24A.jpg","/Image25A.jpg",
