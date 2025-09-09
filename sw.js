@@ -1,4 +1,4 @@
-const CACHE_NAME = 'dienchan-cache-v1';
+const CACHE_NAME = 'pwa-cache-v1';
 const urlsToCache = [
   '/',
   '/Index.html',
