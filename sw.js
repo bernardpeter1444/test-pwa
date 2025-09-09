@@ -5,129 +5,38 @@ const urlsToCache = [
   "/manifest.json",
   "/style.css",
   "/script.js",
+  "/Accueil.png",
   "/icon-192.png",
   "/icon-512.png",
-
-  // Images série A
-  "/Image1A.jpg",
-  "/Image2A.jpg",
-  "/Image3A.jpg",
-  "/Image4A.jpg",
-  "/Image5A.jpg",
-  "/Image6A.jpg",
-  "/Image7A.jpg",
-  "/Image8A.jpg",
-  "/Image9A.jpg",
-  "/Image10A.jpg",
-  "/Image11A.jpg",
-  "/Image12A.jpg",
-  "/Image13A.jpg",
-  "/Image14A.jpg",
-  "/Image15A.jpg",
-  "/Image16A.jpg",
-  "/Image17A.jpg",
-  "/Image18A.jpg",
-  "/Image19A.jpg",
-  "/Image20A.jpg",
-  "/Image21A.jpg",
-  "/Image22A.jpg",
-  "/Image23A.jpg",
-  "/Image24A.jpg",
-  "/Image25A.jpg",
-  "/Image26A.jpg",
-  "/Image27A.jpg",
-  "/Image28A.jpg",
-  "/Image29A.jpg",
-  "/Image30A.jpg",
-  "/Image31A.jpg",
-  "/Image32A.jpg",
-  "/Image33A.jpg",
-  "/Image34A.jpg",
-  "/Image35A.jpg",
-  "/Image36A.jpg",
-  "/Image37A.jpg",
-  "/Image38A.jpg",
-  "/Image39A.jpg",
-  "/Image40A.jpg",
-  "/Image41A.jpg",
-  "/Image42A.jpg",
-  "/Image43A.jpg",
-  "/Image44A.jpg",
-  "/Image45A.jpg",
-  "/Image46A.jpg",
-  "/Image47A.jpg",
-  "/Image48A.jpg",
-  "/Image49A.jpg",
-  "/Image50A.jpg",
-  "/Image51A.jpg",
-  "/Image52A.jpg",
-  "/Image53A.jpg",
-  "/Image54A.jpg",
-  "/Image55A.jpg",
-  "/Image56A.jpg",
-  "/Image57A.jpg",
-  "/Image58A.jpg",
-  "/Image59A.jpg",
-  "/Image60A.jpg",
-  "/Image61A.jpg",
-  "/Image62A.jpg",
-  "/Image63A.jpg",
-  "/Image64A.jpg",
-  "/Image65A.jpg",
-  "/Image66A.jpg",
-  "/Image67A.jpg",
-  "/Image68A.jpg",
-  "/Image69A.jpg",
-  "/Image70A.jpg",
-  "/Image71A.jpg",
-  "/Image72A.jpg",
-  "/Image73A.jpg",
-  "/Image74A.jpg",
-  "/Image75A.jpg",
-  "/Image76A.jpg",
-  "/Image77A.jpg",
-  "/Image78A.jpg",
-
-  // Images série B
-  "/Image1B.jpg",
-  "/Image2B.jpg",
-  "/Image3B.jpg",
-  "/Image4B.jpg",
-  "/Image5B.jpg",
-  "/Image6B.jpg",
-  "/Image7B.jpg",
-  "/Image8B.jpg",
-  "/Image9B.jpg",
-  "/Image10B.jpg",
-  "/Image11B.jpg",
-  "/Image12B.jpg",
-  "/Image13B.jpg",
-  "/Image14B.jpg",
-  "/Image15B.jpg",
-  "/Image16B.jpg",
-  "/Image17B.jpg",
-  "/Image18B.jpg",
-  "/Image19B.jpg",
-  "/Image20B.jpg",
-  "/Image21B.jpg",
-  "/Image22B.jpg",
-  "/Image23B.jpg",
-  "/Image24B.jpg",
-  "/Image25B.jpg",
-  "/Image26B.jpg",
-  "/Image27B.jpg",
-  "/Image28B.jpg",
-  "/Image29B.jpg",
-  "/Image30B.jpg",
-  "/Image31B.jpg",
-  "/Image32B.jpg",
-  "/Image33B.jpg",
-  "/Image34B.jpg",
-  "/Image35B.jpg",
-  "/Image36B.jpg",
+  // Series A (1..78)
+  "/Image1A.jpg","/Image2A.jpg","/Image3A.jpg","/Image4A.jpg","/Image5A.jpg",
+  "/Image6A.jpg","/Image7A.jpg","/Image8A.jpg","/Image9A.jpg","/Image10A.jpg",
+  "/Image11A.jpg","/Image12A.jpg","/Image13A.jpg","/Image14A.jpg","/Image15A.jpg",
+  "/Image16A.jpg","/Image17A.jpg","/Image18A.jpg","/Image19A.jpg","/Image20A.jpg",
+  "/Image21A.jpg","/Image22A.jpg","/Image23A.jpg","/Image24A.jpg","/Image25A.jpg",
+  "/Image26A.jpg","/Image27A.jpg","/Image28A.jpg","/Image29A.jpg","/Image30A.jpg",
+  "/Image31A.jpg","/Image32A.jpg","/Image33A.jpg","/Image34A.jpg","/Image35A.jpg",
+  "/Image36A.jpg","/Image37A.jpg","/Image38A.jpg","/Image39A.jpg","/Image40A.jpg",
+  "/Image41A.jpg","/Image42A.jpg","/Image43A.jpg","/Image44A.jpg","/Image45A.jpg",
+  "/Image46A.jpg","/Image47A.jpg","/Image48A.jpg","/Image49A.jpg","/Image50A.jpg",
+  "/Image51A.jpg","/Image52A.jpg","/Image53A.jpg","/Image54A.jpg","/Image55A.jpg",
+  "/Image56A.jpg","/Image57A.jpg","/Image58A.jpg","/Image59A.jpg","/Image60A.jpg",
+  "/Image61A.jpg","/Image62A.jpg","/Image63A.jpg","/Image64A.jpg","/Image65A.jpg",
+  "/Image66A.jpg","/Image67A.jpg","/Image68A.jpg","/Image69A.jpg","/Image70A.jpg",
+  "/Image71A.jpg","/Image72A.jpg","/Image73A.jpg","/Image74A.jpg","/Image75A.jpg",
+  "/Image76A.jpg","/Image77A.jpg","/Image78A.jpg",
+  // Series B (1..36)
+  "/Image1B.jpg","/Image2B.jpg","/Image3B.jpg","/Image4B.jpg","/Image5B.jpg",
+  "/Image6B.jpg","/Image7B.jpg","/Image8B.jpg","/Image9B.jpg","/Image10B.jpg",
+  "/Image11B.jpg","/Image12B.jpg","/Image13B.jpg","/Image14B.jpg","/Image15B.jpg",
+  "/Image16B.jpg","/Image17B.jpg","/Image18B.jpg","/Image19B.jpg","/Image20B.jpg",
+  "/Image21B.jpg","/Image22B.jpg","/Image23B.jpg","/Image24B.jpg","/Image25B.jpg",
+  "/Image26B.jpg","/Image27B.jpg","/Image28B.jpg","/Image29B.jpg","/Image30B.jpg",
+  "/Image31B.jpg","/Image32B.jpg","/Image33B.jpg","/Image34B.jpg","/Image35B.jpg",
+  "/Image36B.jpg"
 ];
 
-// Installation + mise en cache
+// Installation : mise en cache
 self.addEventListener("install", event => {
   event.waitUntil(
     caches.open(CACHE_NAME).then(cache => cache.addAll(urlsToCache))
@@ -135,11 +44,21 @@ self.addEventListener("install", event => {
   self.skipWaiting();
 });
 
-// Réponse offline depuis le cache
+// Activation : prendre le contrôle immédiatement
+self.addEventListener("activate", event => {
+  event.waitUntil(self.clients.claim());
+});
+
+// Fetch : servir depuis le cache si dispo, sinon réseau
 self.addEventListener("fetch", event => {
+  // navigation -> si offline, renvoyer Index.html (app shell)
+  if (event.request.mode === 'navigate') {
+    event.respondWith(
+      fetch(event.request).catch(() => caches.match('/Index.html'))
+    );
+    return;
+  }
   event.respondWith(
-    caches.match(event.request).then(response => {
-      return response || fetch(event.request);
-    })
+    caches.match(event.request).then(response => response || fetch(event.request))
   );
 });
